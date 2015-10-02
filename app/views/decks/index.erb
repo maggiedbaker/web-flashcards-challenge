@@ -1,0 +1,9 @@
+<h1>Welcome to Web Flashcards</h1>
+
+<p>Choose a deck to get started</p>
+
+<ul>
+  <% @deck.each do |deck| %>
+    <li><a href="/decks/<%= deck.id %>"><%= deck.name %></a></li>
+  <% end %>
+</ul>
