@@ -5,11 +5,6 @@ class Card < ActiveRecord::Base
 
   validates :prompt, :answer, :deck_id, :presence => true
 
-  def correct?(guess)
-    guess == self.answer
-  end
-
-
 end
 
 
