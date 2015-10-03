@@ -1,6 +1,6 @@
-<h1><%= @card.prompt %></h1>
+<h1>Playing with the <%= @deck.name %> deck</h1>
 
-<form method="POST" action="/cards/<% @card.id %>">
+<form method="POST" action="/decks">
   <label for="answer">Please submit guess:</label>
   <input id="answer" type="text" name="card[answer]">
    <input type="submit" value="Submit">
