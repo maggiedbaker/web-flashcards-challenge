@@ -4,19 +4,6 @@ get '/decks' do
 end
 
 get '/decks/:id' do |id|
-  @deck = Deck.find(id)
-  erb :'decks/show'
+  round = Round.create(deck_id: id)
+  redirect "/decks/#{id}/rounds/#{round.id}/guess"
 end
-
-# get '/decks/:id' do |id|
-#   @deck = Deck.find(id)
-#   @cards = @deck.cards.dup
-#   @current_card = @cards.sample
-#   # redirect '/cards/#{current_card.id}'
-#   erb :'cards/show'
-# end
-
-
-
-
-
