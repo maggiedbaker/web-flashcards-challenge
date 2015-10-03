@@ -1,6 +1,5 @@
-<% @cards.each do |card| %>
-
-<li><a href="/cards/<%= card.id %>"><%= card.prompt %></a></li>
+<%Card.all.each do |card|%>
+<p><%= card.prompt %> </p>
 <%end%>
 
 
