@@ -1,1 +1,9 @@
-<h1><%= @current_card.prompt %></h1>
+<h1><%= @card.prompt %></h1>
+
+<form method="POST" action="/cards/<% @card.id %>">
+  <label for="answer">Please submit guess:</label>
+  <input id="answer" type="text" name="card[answer]">
+   <input type="submit" value="Submit">
+</form>
+
+
