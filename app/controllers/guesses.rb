@@ -1,22 +1,30 @@
 # require 'pry'
 
-get '/decks/:deck_id/rounds/:round_id/guess' do |deck_id, round_id|
-  Guess.create(user_id: 1, round_id: round_id, card_id: 2, guess_text: "hallo")
+get '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_id, card_id|
+
   @round = Round.find(round_id)
   @deck = Deck.find(deck_id)
-
   @next_card = @deck.cards.shuffle.find { |card| card.guesses.select {|guess| guess.correct == true }.empty? }
-
   if @next_card == nil
     erb :'decks/index'
   else
     erb :'cards/show'
   end
-  #   # redirect "/decks/#{deck_id}/cards/#{@next_card.id}"
 end
 
-post '/decks/:deck_id/rounds/:round_id/guess' do |deck_id, round_id|
-  "Hello World"
+post '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_id, card_id|
+  guess = params[:card][:answer]
+  @deck = Deck.find(deck_id)
+  @round = Round.find(round_id)
+  @card = Card.find(card_id)
+  @current_guess = Guess.create(user_id: 1, round_id: round_id, card_id: card_id, guess_text: guess)
+  if guess == @card.answer
+    @current_guess.correct = true
+    erb :'guesses/correct'
+  else
+    erb :'guesses/incorrect'
+  end
+  # redirect "/decks/#{deck_id}/rounds/#{round_id}/cards/#{card_id}/guess'
 end
 
 
