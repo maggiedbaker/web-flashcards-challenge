@@ -1,6 +1,8 @@
-<h1>Playing with the <%= @deck.name %> deck</h1>
+<h1><%= @next_card.prompt %></h1>
 
-<form method="POST" action="/decks">
+<p><%= @hi %></p>
+
+<form method="POST" action="/decks/<%=@deck.id%>/rounds/<%=@round.id%>/cards/<%=@next_card.id%>/guess">
   <label for="answer">Please submit guess:</label>
   <input id="answer" type="text" name="card[answer]">
    <input type="submit" value="Submit">
