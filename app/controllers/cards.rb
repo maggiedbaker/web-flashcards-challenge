@@ -7,3 +7,5 @@ get '/cards/:id' do |id|
   @card = Card.find(id)
   erb :'cards/show'
 end
+
+
