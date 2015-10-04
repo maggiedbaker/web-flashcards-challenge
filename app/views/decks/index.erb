@@ -3,7 +3,7 @@
 <h2>Please choose a deck to play:</h2>
 
 <ul>
-  <% @deck.each do |deck| %>
+  <% @all_decks.each do |deck| %>
     <li><a href="/decks/<%= deck.id %>"><%= deck.name %></a></li>
   <% end %>
 </ul>

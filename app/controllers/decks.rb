@@ -1,7 +1,7 @@
 # require 'pry'
 
 get '/decks' do
-  @deck = Deck.all
+  @all_decks = Deck.all
   erb :'decks/index'
 end
 

@@ -1,10 +1,13 @@
-# require 'pry'
+require 'pry'
 
 get '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_id, card_id|
-
   @round = Round.find(round_id)
   @deck = Deck.find(deck_id)
-  @next_card = @deck.cards.shuffle.find { |card| card.guesses.select {|guess| guess.correct == true }.empty? }
+  @all_decks = Deck.all
+
+  eligibile_cards = @deck.cards.reject { |card| card.guesses.select { |guess| guess.round_id == round_id.to_i && guess.correct == true }.empty? != true }
+  @next_card = eligibile_cards.shuffle.first
+
   if @next_card == nil
     erb :'decks/index'
   else
@@ -18,8 +21,9 @@ post '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_
   @round = Round.find(round_id)
   @card = Card.find(card_id)
   @current_guess = Guess.create(user_id: 1, round_id: round_id, card_id: card_id, guess_text: guess)
-  if guess == @card.answer
+  if guess.downcase.strip == @card.answer.downcase.strip
     @current_guess.correct = true
+    @current_guess.save
     erb :'guesses/correct'
   else
     erb :'guesses/incorrect'
