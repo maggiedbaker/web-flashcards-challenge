@@ -9,7 +9,7 @@ get '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_i
   @next_card = eligibile_cards.shuffle.first
 
   if @next_card == nil
-    erb :'decks/index'
+    redirect "/decks/#{deck_id}/rounds/#{round_id}"
   else
     erb :'cards/show'
   end
