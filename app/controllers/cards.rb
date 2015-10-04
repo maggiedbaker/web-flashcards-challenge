@@ -9,4 +9,3 @@ get '/decks/:deck_id/cards/:card_id' do |deck_id, card_id|
   @card = Card.find(card_id)
   erb :'cards/show'
 end
-
