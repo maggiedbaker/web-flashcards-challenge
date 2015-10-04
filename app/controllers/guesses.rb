@@ -1,14 +1,16 @@
-get 'decks/:d_id/rounds/:r_id/guess' do |d_id, r_id|
-  Guess.create(round_id: r_id)
-  @round = Round.find(r_id)
-  @deck = Deck.find(d_id)
+get '/decks/:deck_id/rounds/:round_id/guess' do |deck_id, round_id|
+  Guess.create(user_id: 1, round_id: round_id)
+  @round = Round.find(round_id)
+  @deck = Deck.find(deck_id)
   erb :'cards/show'
-  # @deck = Deck.find(deck_id)
 
-  # # def find_first_eligible_card(array)
-  # #   array.find{|object| object.}
-  # # end
+  @next_card = @deck.cards.find { |card| card.guesses.select {|guess| guess.correct == true }.empty? }
 
-  # redirect "/decks/:id/cards/#{:id}"
+  if @next_card == nil
+    erb :'decks/index'
+  else
+    erb :'cards/show'
+    redirect "/decks/#{deck_id}/cards/#{next_card}"
+  end
 end
 
