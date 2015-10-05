@@ -1,0 +1,19 @@
+<h1>Hi <%=@user.username%>. Here's how you've done on web flashcards.</h1>
+
+<% @user_deck_ids.each do |deck_id| %>
+
+<% deck_set = @rounds.find_all {|round| round.deck_id == deck_id } %>
+<% sorted_deck_set = deck_set.sort_by { |round| round.created_at } %>
+
+<% sorted_deck_set.each do |round| %>
+  <h2><%= @all_decks.find(round.deck_id).name %>, played on <%= round.created_at.strftime("%m/%d/%Y, %I:%M%p") %></h2>
+  <h3>Number of cards in the deck: <%= @all_decks.find(round.deck_id).cards.length %></h3>
+  <h3>Number of cards answered correctly on the first guess:
+
+  <% deck = Deck.find(round.deck_id) %>
+  <%= deck.cards.count {|card| card.guesses.length == 1 }%>
+
+  <h3><%= @guesses.length %> total guesses needed to complete the round.</h3><br><br>
+<%end%>
+
+<%end%>

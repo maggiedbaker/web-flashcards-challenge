@@ -1,4 +1,9 @@
 <form action="/login" method="post">
-  <%= erb :'users/auth_form' %>
-  <input type="submit" value="Login" />
+  <label for="user_username">Username:</label>
+  <input type="text" name="username"/><br>
+
+  <label for="user_password">Password:</label>
+  <input type="password" name="password"/><br>
+
+  <input type="submit" value="Login">
 </form>
