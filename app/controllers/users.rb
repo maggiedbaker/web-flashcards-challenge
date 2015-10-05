@@ -17,6 +17,20 @@ post '/login' do
   end
 end
 
+get '/users/new' do
+  erb :'users/signup'
+end
+
+post '/users' do
+  user= User.new(params[:user])
+  if user.save
+    session[:user_id] = user.id
+    redirect '/'
+  else
+    redirect '/users/new'
+  end
+end
+
 get '/users/:id' do |user_id|
   @all_decks = Deck.all
   @user = User.find(user_id)
@@ -30,3 +44,4 @@ get '/logout' do
   session[:user_id] = nil
   redirect '/login'
 end
+
