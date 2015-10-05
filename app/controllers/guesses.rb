@@ -1,6 +1,7 @@
 require 'pry'
 
 get '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_id, card_id|
+
   @round = Round.find(round_id)
   @deck = Deck.find(deck_id)
   @all_decks = Deck.all
@@ -9,7 +10,7 @@ get '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_i
   @next_card = eligibile_cards.shuffle.first
 
   if @next_card == nil
-    redirect "/decks/#{deck_id}/rounds/#{round_id}"
+    redirect "/users/#{Round.find(round_id.to_i).user_id}"
   else
     erb :'cards/show'
   end
@@ -20,7 +21,7 @@ post '/decks/:deck_id/rounds/:round_id/cards/:card_id/guess' do |deck_id, round_
   @deck = Deck.find(deck_id)
   @round = Round.find(round_id)
   @card = Card.find(card_id)
-  @current_guess = Guess.create(user_id: 1, round_id: round_id, card_id: card_id, guess_text: guess)
+  @current_guess = Guess.create(user_id: @round.user_id, round_id: round_id, card_id: card_id, guess_text: guess)
   if guess.downcase.strip == @card.answer.downcase.strip
     @current_guess.correct = true
     @current_guess.save
